@@ -1,3 +1,5 @@
+import time
+
 import pygame
 
 from core.direction import Direction
@@ -17,6 +19,8 @@ class Game:
             self._process_input()
             self._update()
             self._render()
+
+        time.sleep(3)
 
     def _process_input(self) -> None:
         eventypes = (pygame.KEYDOWN, pygame.QUIT)

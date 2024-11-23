@@ -38,7 +38,7 @@ class Renderer:
         self._clear_window()
 
         self._draw_board()
-        self._draw_score()
+        self._draw_info()
 
         pygame.display.update()
         self._update_fps()
@@ -73,11 +73,24 @@ class Renderer:
                 (self._board_frame_size.x, scaled_y),
             )
 
+    def _draw_info(self) -> None:
+        self._draw_score()
+        self._draw_result()
+
     def _draw_score(self) -> None:
         margin = 16
         font = pygame.font.SysFont("times", 16)
         surface = font.render(f"Score: {self._model.score}", True, Color.WHITE.value)
         self._window.blit(surface, (self._board_frame_size.x + margin, margin))
+
+    def _draw_result(self) -> None:
+        if self._model.running:
+            return
+
+        margin = 16
+        font = pygame.font.SysFont("times", 16)
+        surface = font.render(f"You lost :(", True, Color.WHITE.value)
+        self._window.blit(surface, (self._board_frame_size.x + margin, 4 * margin))
 
     def _draw_apple(self) -> None:
         self._draw_object(self._model.apple.location, Color.RED)
