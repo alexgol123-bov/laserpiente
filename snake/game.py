@@ -4,7 +4,7 @@ import pygame
 
 from core.direction import Direction
 from renderer import Renderer
-from game_model import GameModel
+from core.game_model import GameModel
 
 
 class Game:

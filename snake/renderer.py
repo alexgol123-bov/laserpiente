@@ -5,7 +5,7 @@ import pygame
 from color import Color
 
 from core.types.vector import Vector
-from game_model import GameModel
+from core.game_model import GameModel
 
 
 class Renderer:
