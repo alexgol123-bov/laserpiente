@@ -16,7 +16,7 @@ class Game:
     def __init__(self, title) -> None:
         self._board_size = Vector(40, 40)
         self._scale = Vector(10, 10)
-        self._fps = 24
+        self._fps = 16
 
         self._score = 0
 
@@ -31,25 +31,22 @@ class Game:
         pygame.display.set_caption(title)
 
         window_size = (
-            self._board_size.x * self._scale.x,
-            self._board_size.y * self._scale.y,
+            (self._board_size.x + 1) * self._scale.x,
+            (self._board_size.y + 1) * self._scale.y,
         )
         self._window = pygame.display.set_mode(window_size)
         self._fps_controller = pygame.time.Clock()
 
     def __init_snake(self) -> None:
         location = self._board_size / 2
-        direction = random.choice(
-            (Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT)
-        )
-        self._snake = Snake(location, direction)
+        self._snake = Snake(location)
 
     def _generate_apple(self) -> None:
         self._apple = Apple(self._random_location())
 
     def _random_location(self) -> Vector:
-        x = random.randint(0, self._board_size.x - 1)
-        y = random.randint(0, self._board_size.y - 1)
+        x = random.randint(0, self._board_size.x)
+        y = random.randint(0, self._board_size.y)
         return Vector(x, y)
 
     def __del__(self) -> None:
@@ -69,7 +66,7 @@ class Game:
 
     def _process_input(self) -> None:
         eventypes = (pygame.KEYDOWN, pygame.QUIT)
-        direction = self._snake.direction
+        direction = None
 
         for event in pygame.event.get(eventtype=eventypes):
             match event.type:
@@ -77,10 +74,6 @@ class Game:
                     self._running = False
                 case pygame.KEYDOWN:
                     match event.key:
-                        case pygame.K_UP:
-                            direction = Direction.UP
-                        case pygame.K_DOWN:
-                            direction = Direction.DOWN
                         case pygame.K_LEFT:
                             direction = Direction.LEFT
                         case pygame.K_RIGHT:
@@ -88,7 +81,24 @@ class Game:
                         case pygame.K_ESCAPE:
                             self._running = False
 
-        self._snake.turn(direction)
+        if self._running == False or direction is None:
+            return
+
+        rotator = None
+        match direction:
+            case Direction.RIGHT:
+                rotator = lambda location: Vector(
+                    location.y,
+                    min(self._board_size.x - location.x, self._board_size.x),
+                )
+            case Direction.LEFT:
+                rotator = lambda location: Vector(
+                    min(self._board_size.y - location.y, self._board_size.y),
+                    location.x,
+                )
+
+        self._snake.rotate(rotator)
+        self._apple.rotate(rotator)
 
     def _update(self) -> None:
         if self._is_apple_eaten():
@@ -110,9 +120,9 @@ class Game:
     def _is_snake_out_of_board(self) -> bool:
         return (
             self._snake.head.x < 0
-            or self._snake.head.x >= self._board_size.x
+            or self._snake.head.x > self._board_size.x
             or self._snake.head.y < 0
-            or self._snake.head.y >= self._board_size.y
+            or self._snake.head.y > self._board_size.y
         )
 
     def _snake_ran_into_itself(self) -> bool:

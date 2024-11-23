@@ -7,13 +7,9 @@ class Snake:
 
     __head_index = 0
 
-    def __init__(self, location: Vector, direction: Direction) -> None:
-        self._direction = direction
-        self._body = [
-            location,
-            location - self._direction.value,
-            location - self._direction.value * 2,
-        ]
+    def __init__(self, location: Vector) -> None:
+        self._direction = Direction.UP
+        self._body = [location - self._direction.value * i for i in range(3)]
 
     @property
     def head(self) -> Vector:
@@ -27,20 +23,8 @@ class Snake:
     def direction(self) -> Direction:
         return self._direction
 
-    def turn(self, direction: Direction) -> None:
-        if direction is None:
-            return
-
-        match (self._direction, direction):
-            case (
-                (Direction.UP, Direction.DOWN)
-                | (Direction.DOWN, Direction.UP)
-                | (Direction.RIGHT, Direction.LEFT)
-                | (Direction.LEFT, Direction.RIGHT)
-            ):
-                return
-
-        self._direction = direction
+    def rotate(self, rotator) -> None:
+        self._body[:] = map(rotator, self._body)
 
     def grow(self) -> None:
         head_location = self.head + self._direction.value
