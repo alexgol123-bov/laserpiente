@@ -2,6 +2,7 @@ from enum import Enum
 
 
 class Color(Enum):
-    BLACK = (0, 0, 0)
-    GREEN = (0, 255, 0)
-    RED = (255, 0, 0)
+    GREY = (10, 10, 10)
+    BLACK = (5, 5, 5)
+    GREEN = (0, 230, 0)
+    RED = (230, 0, 0)
