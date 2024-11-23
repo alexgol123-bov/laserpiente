@@ -1,4 +1,4 @@
-from core.types.vector import Vector
+from core.vector import Vector
 from core.direction import Direction
 
 

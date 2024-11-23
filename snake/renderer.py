@@ -4,7 +4,7 @@ import pygame
 
 from color import Color
 
-from core.types.vector import Vector
+from core.vector import Vector
 from core.game_model import GameModel
 
 

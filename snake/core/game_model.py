@@ -3,7 +3,7 @@ import random
 from core.apple import Apple
 from core.direction import Direction
 from core.snake import Snake
-from core.types.vector import Vector
+from core.vector import Vector
 
 
 class GameModel:

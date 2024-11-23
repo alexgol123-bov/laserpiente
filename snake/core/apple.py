@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from core.types.vector import Vector
+from core.vector import Vector
 
 
 @dataclass

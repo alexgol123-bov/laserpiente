@@ -1,6 +1,6 @@
 from enum import Enum
 
-from core.types.vector import Vector
+from core.vector import Vector
 
 
 class Direction(Enum):
