@@ -1,17 +1,20 @@
+"""Coordinate vector
+
+This file can be imported as a module and contains the following classes:
+    * Vector
+"""
+
 from dataclasses import dataclass
 from typing import Self
 
 
 @dataclass
 class Vector:
-    """Class representing a coordinate vector.
+    """Class representing a coordinate vector (2D).
 
-    Attributes
-    ----------
-    x : int
-        value on the horizontal X-axis
-    y : int
-        value on the vertical Y-axis
+    Attributes:
+        x (int): a value on the horizontal X-axis
+        y (int): a value on the vertical Y-axis
     """
 
     x: int = 0
