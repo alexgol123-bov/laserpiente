@@ -25,6 +25,9 @@ class GameModel:
 
     def __init__(self) -> None:
         """Initialises a GameModel class object."""
+
+        # _board_size does not necessarily have to match the size of the frame
+        # such a representation of the board makes it easier to manipulate with
         self._board_size = Vector(40, 40)
         self.running = True
         self._score = 0
