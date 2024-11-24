@@ -1,11 +1,9 @@
-from dataclasses import dataclass
-
 from core.vector import Vector
 
 
-@dataclass
 class Apple:
-    location: Vector
+    def __init__(self, location: Vector) -> None:
+        self.location = location
 
     def rotate(self, rotator) -> None:
         self.location = rotator(self.location)
